@@ -30,9 +30,9 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children:  [
                   Text(
-                    "Profile",
+                    AppLocalizations.of(context)!.profile,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -145,11 +145,11 @@ class ProfileScreen extends StatelessWidget {
                           // ───── SETTINGS ─────
                           _SettingTile(
                             icon: Icons.lock_outline,
-                            title: "Change Password",
+                            title: AppLocalizations.of(context)!.changePassword,
                           ),
                           _SettingTile(
                             icon: Icons.notifications_none,
-                            title: "Notifications",
+                            title: AppLocalizations.of(context)!.notifications,
                             trailing: const _Badge(count: 2),
                           ),
                           _SettingTile(
@@ -247,7 +247,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           _SettingTile(
                             icon: Icons.logout,
-                            title: "Logout",
+                            title: AppLocalizations.of(context)!.logout,
                             titleColor: Colors.red,
                             iconColor: Colors.red,
                             onTap: () => context.read<ProfileCubit>().logout(),
