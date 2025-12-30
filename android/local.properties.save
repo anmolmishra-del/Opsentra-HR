@@ -1,0 +1,7 @@
+sdk.dir=/home/praveen/Android/Sdk
+ndk.dir=/home/praveen/Android/Sdk/ndk/27.0.12077973
+flutter.sdk=/home/praveen/flutter
+flutter.buildMode=debug
+flutter.versionName=1.0.0
+flutter.versionCode=1
+	

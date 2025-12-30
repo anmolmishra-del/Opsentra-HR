@@ -1,0 +1,12 @@
+{
+  "profile": "Profile",
+  "language": "Language",
+  "english": "English",
+  "hindi": "Hindi",
+  "logout": "Logout",
+  "notifications": "Notifications",
+  "changePassword": "Change Password",
+  "joiningDate": "Joining Date",
+  "todaysAttendance": "Today's Attendance"
+  
+}
