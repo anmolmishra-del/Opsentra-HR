@@ -6,12 +6,11 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:opsentra_hr/features/home/state/home_state.dart';
+
+import 'package:opsentra_hr/l10n/app_localizations.dart';
 import '../cubit/home_cubit.dart';
 
 import 'package:lottie/lottie.dart';
-
-
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,17 +20,15 @@ class HomeScreen extends StatelessWidget {
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
         if (state.isBirthday) {
-          
-        //  _showConfettiOverlay(context); 
+          //  _showConfettiOverlay(context);
         }
       },
       child: Scaffold(
         backgroundColor: AppColors.offWhite,
         body: Stack(
           children: [
-            _buildMainContent(),
+            _buildMainContent(context),
 
-          
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 if (!state.isBirthday) return const SizedBox.shrink();
@@ -44,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                       right: 16,
                       child: _BirthdayBanner(name: state.userName),
                     ),
-                
+
                     Lottie.asset(
                       'assets/wish.json',
                       fit: BoxFit.cover,
@@ -54,8 +51,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 );
-
-                
               },
             ),
           ],
@@ -64,10 +59,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
   void _showConfettiOverlay(BuildContext context) {
-    final controller =
-        ConfettiController(duration: const Duration(seconds: 4));
+    final controller = ConfettiController(duration: const Duration(seconds: 4));
 
     final overlay = OverlayEntry(
       builder: (_) => Positioned.fill(
@@ -101,22 +94,16 @@ class HomeScreen extends StatelessWidget {
     });
   }
 
-
-  Widget _buildMainContent() {
+  Widget _buildMainContent(BuildContext context) {
     return Column(
       children: [
-      
         Container(
           padding: const EdgeInsets.fromLTRB(16, 50, 16, 24),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                AppColors.gradientStart,
-                AppColors.primaryDark,
-              ],
+              colors: [AppColors.gradientStart, AppColors.primaryDark],
             ),
-            borderRadius:
-                BorderRadius.vertical(bottom: Radius.circular(28)),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,14 +119,12 @@ class HomeScreen extends StatelessWidget {
               CircleAvatar(
                 radius: 22,
                 backgroundColor: Colors.white,
-                child: Icon(Icons.person,
-                    color: AppColors.primary),
+                child: Icon(Icons.person, color: AppColors.primary),
               ),
             ],
           ),
         ),
 
-      
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -148,10 +133,9 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     _InfoCard(
-                      title: "Today's Attendance",
+                      title: AppLocalizations.of(context)!.todaysAttendance,
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           Divider(),
                           SizedBox(height: 6),
@@ -165,15 +149,13 @@ class HomeScreen extends StatelessWidget {
                     _LeaveCard(
                       title: "Leave Balance",
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           Divider(),
                           SizedBox(height: 8),
                           Text(
                             "8 CL | 4 SL | 12 PL",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600),
+                            style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -188,8 +170,7 @@ class HomeScreen extends StatelessWidget {
                     _InfoCard(
                       title: "Announcements",
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           Divider(),
                           SizedBox(height: 6),
@@ -210,9 +191,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: const [
-                      BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 6),
+                      BoxShadow(color: Colors.black12, blurRadius: 6),
                     ],
                   ),
                   child: Row(
@@ -224,10 +203,7 @@ class HomeScreen extends StatelessWidget {
                           value: "5 Pending",
                         ),
                       ),
-                      SizedBox(
-                        height: 40,
-                        child: VerticalDivider(),
-                      ),
+                      SizedBox(height: 40, child: VerticalDivider()),
                       Expanded(
                         child: _MiniItem(
                           icon: Icons.approval_outlined,
@@ -247,7 +223,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 class _BirthdayBanner extends StatelessWidget {
   final String name;
   const _BirthdayBanner({required this.name});
@@ -261,14 +236,11 @@ class _BirthdayBanner extends StatelessWidget {
           colors: [Colors.pink, Colors.deepPurple],
         ),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 6),
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 6)],
       ),
       child: Row(
         children: [
-          const Icon(Icons.cake,
-              color: Colors.white, size: 30),
+          const Icon(Icons.cake, color: Colors.white, size: 30),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

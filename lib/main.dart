@@ -1,11 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opsentra_hr/Core/constants/app_assets.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
 
+import 'package:opsentra_hr/features/language/cubit/language_cubit.dart';
+import 'package:opsentra_hr/features/language/state/language_state.dart';
+import 'package:opsentra_hr/l10n/app_localizations.dart';
+
 import 'package:opsentra_hr/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
@@ -18,7 +24,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
-  runApp(const MyApp());
+  runApp(BlocProvider(create: (_) => LanguageCubit(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,13 +32,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: Routes.getAll(),
+    return BlocBuilder<LanguageCubit, LanguageState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Opsentra-HR',
 
-      debugShowCheckedModeBanner: false,
-      title: 'Opsentra-HR',
-      theme: ThemeData(useMaterial3: true),
-      home: SplashScreen(),
+          locale: context.watch<LanguageCubit>().state.locale,
+
+          supportedLocales: const [Locale('en'), Locale('hi')],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+
+          theme: ThemeData(useMaterial3: true),
+          routes: Routes.getAll(),
+          home: const SplashScreen(),
+        );
+      },
     );
   }
 }
