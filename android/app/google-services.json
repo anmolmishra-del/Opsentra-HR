@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565761949202",
+    "project_id": "hrms-7a85f",
+    "storage_bucket": "hrms-7a85f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565761949202:android:96c7dc9a0233c14aada2cb",
+        "android_client_info": {
+          "package_name": "com.example.opsentra_hr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaTlu-yyppz08Pkj8ArnhASxMKwxo0Kp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

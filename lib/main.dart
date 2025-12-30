@@ -1,46 +1,44 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:opsentra_hr/Core/constants/app_assets.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
+
+import 'package:opsentra_hr/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+@pragma('vm:entry-point')
+Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("🔔 Background message: ${message.notification?.title}");
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const SplashScreen(),
+      routes: Routes.getAll(),
+
+      debugShowCheckedModeBanner: false,
+      title: 'Opsentra-HR',
+      theme: ThemeData(useMaterial3: true),
+      home: SplashScreen(),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-  // test
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -63,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
 
     if (isLoggedIn) {
-      //    Navigator.pushReplacementNamed(context, Routes.home);
+      Navigator.pushReplacementNamed(context, Routes.main);
     } else {
-      //  Navigator.pushReplacementNamed(context, Routes.onboarding);
+      Navigator.pushReplacementNamed(context, Routes.main);
     }
   }
 
@@ -73,7 +71,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Image.asset(AppImage.logo, fit: BoxFit.cover),
+      body: Image.asset(
+        height: MediaQuery.of(context).size.height,
+        AppImage.logo,
+        fit: BoxFit.fill,
+      ),
     );
   }
 }
