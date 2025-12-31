@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 
           locale: context.watch<LanguageCubit>().state.locale,
 
-          supportedLocales: const [Locale('en'), Locale('hi')],
+          supportedLocales: const [Locale('en'), Locale('hi'), Locale('te')],
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

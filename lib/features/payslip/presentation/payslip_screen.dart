@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
 import 'package:opsentra_hr/Core/widgets/loading_widget.dart';
 import 'package:opsentra_hr/features/payslip/state/payslip_state.dart';
+import 'package:opsentra_hr/l10n/app_localizations.dart';
 import '../cubit/payslip_cubit.dart';
 
 class PayslipScreen extends StatelessWidget {
@@ -19,14 +20,9 @@ class PayslipScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 50, 16, 24),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  AppColors.gradientStart,
-                  AppColors.primaryDark,
-                ],
+                colors: [AppColors.gradientStart, AppColors.primaryDark],
               ),
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(28),
-              ),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,11 +36,10 @@ class PayslipScreen extends StatelessWidget {
                   ),
                 ),
                 CircleAvatar(
-                radius: 22,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person,
-                    color: AppColors.primary),
-              ),
+                  radius: 22,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, color: AppColors.primary),
+                ),
               ],
             ),
           ),
@@ -77,11 +72,11 @@ class PayslipScreen extends StatelessWidget {
                           },
                         ),
 
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
 
                         // ───── EARNINGS ─────
                         _WhiteCard(
-                          title: "Earnings",
+                          title: AppLocalizations.of(context)!.earnings,
                           child: Column(
                             children: [
                               const Divider(),
@@ -96,11 +91,11 @@ class PayslipScreen extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
 
                         // ───── DEDUCTIONS ─────
                         _WhiteCard(
-                          title: "Deductions",
+                          title: AppLocalizations.of(context)!.deductions,
                           child: Column(
                             children: [
                               const Divider(),
@@ -133,7 +128,10 @@ class PayslipScreen extends StatelessWidget {
                               // final s = state;
                               // downloadPayslip(s.selectedYear, s.selectedMonth);
                             },
-                            icon: const Icon(Icons.download, color: Colors.white),
+                            icon: const Icon(
+                              Icons.download,
+                              color: Colors.white,
+                            ),
                             label: const Text(
                               "Download Payslip",
                               style: TextStyle(
@@ -163,6 +161,7 @@ class PayslipScreen extends StatelessWidget {
     );
   }
 }
+
 class _YearMonthNetPayCard extends StatelessWidget {
   final String selectedYear;
   final String selectedMonth;
@@ -190,9 +189,7 @@ class _YearMonthNetPayCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6),
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,33 +245,25 @@ class _YearMonthNetPayCard extends StatelessWidget {
 
           const Text(
             "Net Pay",
-            style: TextStyle(
-              fontSize: 13,
-              color: AppColors.textMedium,
-            ),
+            style: TextStyle(fontSize: 13, color: AppColors.textMedium),
           ),
           const SizedBox(height: 6),
 
           Text(
             netPay,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
         ],
       ),
     );
   }
 }
+
 class _WhiteCard extends StatelessWidget {
   final String title;
   final Widget child;
 
-  const _WhiteCard({
-    required this.title,
-    required this.child,
-  });
+  const _WhiteCard({required this.title, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -284,9 +273,7 @@ class _WhiteCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 6),
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,14 +293,12 @@ class _WhiteCard extends StatelessWidget {
     );
   }
 }
+
 class _RowItem extends StatelessWidget {
   final String title;
   final String value;
 
-  const _RowItem({
-    required this.title,
-    required this.value,
-  });
+  const _RowItem({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -324,17 +309,11 @@ class _RowItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textDark,
-            ),
+            style: TextStyle(fontSize: 14, color: AppColors.textDark),
           ),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
         ],
       ),

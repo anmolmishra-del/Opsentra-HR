@@ -30,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
+                children: [
                   Text(
                     AppLocalizations.of(context)!.profile,
                     style: TextStyle(
@@ -107,7 +107,9 @@ class ProfileScreen extends StatelessWidget {
 
                           // ───── REPORTING MANAGER ─────
                           _WhiteCard(
-                            title: "Reporting Manager",
+                            title: AppLocalizations.of(
+                              context,
+                            )!.reportingManager,
                             child: Row(
                               children: [
                                 const CircleAvatar(
@@ -155,15 +157,34 @@ class ProfileScreen extends StatelessWidget {
                           _SettingTile(
                             icon: Icons.language,
                             title: AppLocalizations.of(context)!.language,
-                            subtitle:
-                                context
-                                        .read<LanguageCubit>()
-                                        .state
-                                        .locale
-                                        .languageCode ==
-                                    'en'
-                                ? AppLocalizations.of(context)!.english
-                                : AppLocalizations.of(context)!.hindi,
+                            // subtitle:
+                            //     context
+                            //             .read<LanguageCubit>()
+                            //             .state
+                            //             .locale
+                            //             .languageCode ==
+                            //         'en'
+                            //     ? AppLocalizations.of(context)!.english
+                            //     : AppLocalizations.of(context)!.hindi,
+                            subtitle: () {
+                              final langCode = context
+                                  .read<LanguageCubit>()
+                                  .state
+                                  .locale
+                                  .languageCode;
+
+                              switch (langCode) {
+                                case 'en':
+                                  return AppLocalizations.of(context)!.english;
+                                case 'hi':
+                                  return AppLocalizations.of(context)!.hindi;
+                                case 'te':
+                                  return AppLocalizations.of(context)!.telugu;
+                                default:
+                                  return AppLocalizations.of(context)!.english;
+                              }
+                            }(),
+
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
@@ -232,6 +253,31 @@ class ProfileScreen extends StatelessWidget {
                                                     .locale
                                                     .languageCode ==
                                                 'hi'
+                                            ? const Icon(
+                                                Icons.check,
+                                                color: Colors.green,
+                                              )
+                                            : null,
+                                      ),
+                                      ListTile(
+                                        title: Text(
+                                          AppLocalizations.of(context)!.telugu,
+                                        ),
+                                        onTap: () {
+                                          context
+                                              .read<LanguageCubit>()
+                                              .changeLanguage(
+                                                const Locale('te'),
+                                              );
+                                          Navigator.pop(context);
+                                        },
+                                        trailing:
+                                            context
+                                                    .read<LanguageCubit>()
+                                                    .state
+                                                    .locale
+                                                    .languageCode ==
+                                                'te'
                                             ? const Icon(
                                                 Icons.check,
                                                 color: Colors.green,

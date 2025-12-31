@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
 import 'package:opsentra_hr/Core/widgets/loading_widget.dart';
 import 'package:opsentra_hr/features/attendance/state/attendance_state.dart';
+import 'package:opsentra_hr/l10n/app_localizations.dart';
 import '../cubit/attendance_cubit.dart';
 
 class AttendanceScreen extends StatelessWidget {
@@ -51,19 +52,23 @@ class AttendanceScreen extends StatelessWidget {
 
                 if (state is AttendanceLoaded) {
                   return SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       children: [
                         _WhiteCard(
-                          title: "Today's Attendance",
+                          title: AppLocalizations.of(context)!.todaysAttendance,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Divider(),
                               const SizedBox(height: 8),
-                              Text("Check-In : ${state.checkInTime}"),
+                              Text(
+                                "${AppLocalizations.of(context)!.checkIn}: ${state.checkInTime}",
+                              ),
                               const SizedBox(height: 4),
-                              Text("Check-Out : ---"),
+                              Text(
+                                "${AppLocalizations.of(context)!.checkOut} : ---",
+                              ),
                               const SizedBox(height: 16),
                               SizedBox(
                                 width: double.infinity,
@@ -91,7 +96,9 @@ class AttendanceScreen extends StatelessWidget {
                         const SizedBox(height: 12),
 
                         _WhiteCard(
-                          title: "Attendance History",
+                          title: AppLocalizations.of(
+                            context,
+                          )!.attendanceHistory,
                           child: Column(
                             children: [
                               const Divider(),
@@ -142,7 +149,7 @@ class AttendanceScreen extends StatelessWidget {
 
                         // ───── HOLIDAY / LEAVE CARD ─────
                         _WhiteCard(
-                          title: "Holidays",
+                          title: AppLocalizations.of(context)!.holidays,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [

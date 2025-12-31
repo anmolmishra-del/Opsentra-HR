@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:opsentra_hr/Core/constants/app_assets.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
@@ -147,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     _LeaveCard(
-                      title: "Leave Balance",
+                      title: AppLocalizations.of(context)!.leaveBalance,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -168,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     _InfoCard(
-                      title: "Announcements",
+                      title: AppLocalizations.of(context)!.announcement,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -195,11 +196,11 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   child: Row(
-                    children: const [
+                    children: [
                       Expanded(
                         child: _MiniItem(
                           icon: Icons.check_circle_outline,
-                          title: "To-Do Tasks",
+                          title: AppLocalizations.of(context)!.todoTasks,
                           value: "5 Pending",
                         ),
                       ),
@@ -207,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _MiniItem(
                           icon: Icons.approval_outlined,
-                          title: "Approvals",
+                          title: AppLocalizations.of(context)!.approval,
                           value: "2 Requests",
                         ),
                       ),
