@@ -27,19 +27,31 @@ class AppLocalizationsTe extends AppLocalizations {
   String get logout => 'లాగ్ అవుట్';
 
   @override
-  String get notifications => 'నోటిఫికేషన్లు';
+  String get notifications => 'నోటిఫికేషన్స్';
 
   @override
-  String get changePassword => 'పాస్‌వర్డ్ మార్చండి';
+  String get changePassword => 'పాస్వర్డ్ మార్చండి';
+
+  @override
+  String get currentPassword => 'ప్రస్తుత పాస్వర్డ్';
+
+  @override
+  String get newPassword => 'కొత్త పాస్వర్డ్';
+
+  @override
+  String get confirmPassword => 'పాస్వర్డ్ ధృవీకరించండి';
+
+  @override
+  String get updatePassword => 'పాస్వర్డ్ అప్డేట్ చేయండి';
 
   @override
   String get joiningDate => 'చేరిన తేదీ';
 
   @override
-  String get todaysAttendance => 'ఈరోజు హాజరు';
+  String get todaysAttendance => 'నేటి హాజరు';
 
   @override
-  String get leaveBalance => 'లీవ్ బ్యాలెన్స్';
+  String get leaveBalance => 'విహిత సెలవుల మిగతా సంతకం';
 
   @override
   String get checkIn => 'చెక్ ఇన్';
@@ -48,35 +60,53 @@ class AppLocalizationsTe extends AppLocalizations {
   String get checkOut => 'చెక్ అవుట్';
 
   @override
-  String get announcement => 'ప్రకటన';
+  String get announcement => 'హోంవర్క్ / ప్రకటన';
 
   @override
-  String get todoTasks => 'చేయాల్సిన పనులు';
+  String get todoTasks => 'చేయవలసిన పనులు';
 
   @override
-  String get approval => 'ఆమోదం';
+  String get approval => 'అనుమతి';
 
   @override
   String get attendanceHistory => 'హాజరు చరిత్ర';
 
   @override
-  String get holidays => 'సెలవులు';
+  String get holidays => 'అవకాశాలు';
 
   @override
-  String get netPay => 'నికర వేతనం';
+  String get netPay => 'నెట్ వేతనం';
 
   @override
-  String get earnings => 'ఆదాయం';
+  String get earnings => 'లాభాలు';
 
   @override
-  String get deductions => 'కట్టింపులు';
+  String get deductions => 'కత్తిరింపులు';
 
   @override
   String get reportingManager => 'రిపోర్టింగ్ మేనేజర్';
 
   @override
-  String get payslip => 'వేతన స్లిప్';
+  String get payslip => 'పేస్లిప్';
 
   @override
   String get attendance => 'హాజరు';
+
+  @override
+  String get name => 'పేరు';
+
+  @override
+  String get employeeId => 'ఉద్యోగి ఐడి';
+
+  @override
+  String get address => 'చిరునామా';
+
+  @override
+  String get dateofbirth => 'పుట్టిన తేదీ';
+
+  @override
+  String get savechanges => 'మార్పులను సేవ్ చేయండి';
+
+  @override
+  String get editprofile => 'ప్రొఫైల్ సవరించండి';
 }

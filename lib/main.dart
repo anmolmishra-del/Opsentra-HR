@@ -7,6 +7,8 @@ import 'package:opsentra_hr/Core/constants/app_colors.dart';
 
 import 'package:opsentra_hr/features/language/cubit/language_cubit.dart';
 import 'package:opsentra_hr/features/language/state/language_state.dart';
+import 'package:opsentra_hr/features/notifications/cubit/notification_cubit-page.dart';
+import 'package:opsentra_hr/features/profile/cubit/profile_cubit.dart';
 import 'package:opsentra_hr/l10n/app_localizations.dart';
 
 import 'package:opsentra_hr/routes/app_routes.dart';
@@ -22,9 +24,17 @@ Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
-  runApp(BlocProvider(create: (_) => LanguageCubit(), child: const MyApp()));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<LanguageCubit>(create: (_) => LanguageCubit()),
+        BlocProvider<ProfileCubit>(create: (_) => ProfileCubit()),
+        BlocProvider<NotificationCubit>(create: (_) => NotificationCubit()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

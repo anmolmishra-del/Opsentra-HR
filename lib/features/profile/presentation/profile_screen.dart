@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
 import 'package:opsentra_hr/features/language/cubit/language_cubit.dart';
+import 'package:opsentra_hr/features/notifications/cubit/notification_cubit-page.dart';
+import 'package:opsentra_hr/features/notifications/presentation/notification_page.dart';
+import 'package:opsentra_hr/features/notifications/state/notification_state.dart';
+import 'package:opsentra_hr/features/profile/change_password/presentation/change_password_page.dart';
 import 'package:opsentra_hr/features/profile/state/profile_state.dart';
 import 'package:opsentra_hr/l10n/app_localizations.dart';
+import 'package:opsentra_hr/routes/app_routes.dart';
 import '../cubit/profile_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -11,308 +16,329 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ProfileCubit()..loadProfile(),
-      child: Scaffold(
-        backgroundColor: AppColors.offWhite,
-        body: Column(
-          children: [
-            // 🔵 HEADER
-            Container(
-              padding: const EdgeInsets.fromLTRB(16, 50, 16, 24),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.gradientStart, AppColors.primaryDark],
-                ),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(28),
-                ),
+    return Scaffold(
+      backgroundColor: AppColors.offWhite,
+      body: Column(
+        children: [
+          // 🔵 HEADER
+          Container(
+            padding: const EdgeInsets.fromLTRB(16, 50, 16, 24),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppColors.gradientStart, AppColors.primaryDark],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.profile,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.profile,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
-                  CircleAvatar(
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.editProfile);
+                  },
+                  child: CircleAvatar(
                     radius: 22,
                     backgroundColor: Colors.white,
                     child: Icon(Icons.person, color: AppColors.primary),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
-            Expanded(
-              child: BlocBuilder<ProfileCubit, ProfileState>(
-                builder: (context, state) {
-                  if (state is ProfileLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+          Expanded(
+            child: BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-                  if (state is ProfileLoaded) {
-                    return SingleChildScrollView(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          // ───── USER CARD ─────
-                          _WhiteCard(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    const CircleAvatar(
-                                      radius: 28,
-                                      backgroundImage: NetworkImage(
-                                        "https://i.pravatar.cc/150",
-                                      ),
+                if (state is ProfileLoaded) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        // ───── USER CARD ─────
+                        _WhiteCard(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 28,
+                                    backgroundImage: NetworkImage(
+                                      "https://i.pravatar.cc/150",
                                     ),
-                                    const SizedBox(width: 12),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          state.name,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          state.role,
-                                          style: const TextStyle(
-                                            color: AppColors.textMedium,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const Divider(height: 24),
-                                _InfoLine(state.empId),
-                                _InfoLine(state.department),
-                                _InfoLine("Joining to: ${state.joiningDate}"),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 12),
-
-                          // ───── REPORTING MANAGER ─────
-                          _WhiteCard(
-                            title: AppLocalizations.of(
-                              context,
-                            )!.reportingManager,
-                            child: Row(
-                              children: [
-                                const CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: NetworkImage(
-                                    "https://i.pravatar.cc/100",
                                   ),
-                                ),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      state.managerName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      state.managerRole,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.textMedium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 12),
-
-                          // ───── SETTINGS ─────
-                          _SettingTile(
-                            icon: Icons.lock_outline,
-                            title: AppLocalizations.of(context)!.changePassword,
-                          ),
-                          _SettingTile(
-                            icon: Icons.notifications_none,
-                            title: AppLocalizations.of(context)!.notifications,
-                            trailing: const _Badge(count: 2),
-                          ),
-                          _SettingTile(
-                            icon: Icons.language,
-                            title: AppLocalizations.of(context)!.language,
-                            // subtitle:
-                            //     context
-                            //             .read<LanguageCubit>()
-                            //             .state
-                            //             .locale
-                            //             .languageCode ==
-                            //         'en'
-                            //     ? AppLocalizations.of(context)!.english
-                            //     : AppLocalizations.of(context)!.hindi,
-                            subtitle: () {
-                              final langCode = context
-                                  .read<LanguageCubit>()
-                                  .state
-                                  .locale
-                                  .languageCode;
-
-                              switch (langCode) {
-                                case 'en':
-                                  return AppLocalizations.of(context)!.english;
-                                case 'hi':
-                                  return AppLocalizations.of(context)!.hindi;
-                                case 'te':
-                                  return AppLocalizations.of(context)!.telugu;
-                                default:
-                                  return AppLocalizations.of(context)!.english;
-                              }
-                            }(),
-
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      const SizedBox(height: 12),
-                                      Container(
-                                        width: 40,
-                                        height: 4,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[400],
-                                          borderRadius: BorderRadius.circular(
-                                            2,
-                                          ),
+                                      Text(
+                                        state.name,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      const SizedBox(height: 12),
-                                      ListTile(
-                                        title: Text(
-                                          AppLocalizations.of(context)!.english,
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        state.role,
+                                        style: const TextStyle(
+                                          color: AppColors.textMedium,
                                         ),
-                                        onTap: () {
-                                          context
-                                              .read<LanguageCubit>()
-                                              .changeLanguage(
-                                                const Locale('en'),
-                                              );
-                                          Navigator.pop(context);
-                                        },
-                                        trailing:
-                                            context
-                                                    .read<LanguageCubit>()
-                                                    .state
-                                                    .locale
-                                                    .languageCode ==
-                                                'en'
-                                            ? const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              )
-                                            : null,
                                       ),
-                                      ListTile(
-                                        title: Text(
-                                          AppLocalizations.of(context)!.hindi,
-                                        ),
-                                        onTap: () {
-                                          context
-                                              .read<LanguageCubit>()
-                                              .changeLanguage(
-                                                const Locale('hi'),
-                                              );
-                                          Navigator.pop(context);
-                                        },
-                                        trailing:
-                                            context
-                                                    .read<LanguageCubit>()
-                                                    .state
-                                                    .locale
-                                                    .languageCode ==
-                                                'hi'
-                                            ? const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              )
-                                            : null,
-                                      ),
-                                      ListTile(
-                                        title: Text(
-                                          AppLocalizations.of(context)!.telugu,
-                                        ),
-                                        onTap: () {
-                                          context
-                                              .read<LanguageCubit>()
-                                              .changeLanguage(
-                                                const Locale('te'),
-                                              );
-                                          Navigator.pop(context);
-                                        },
-                                        trailing:
-                                            context
-                                                    .read<LanguageCubit>()
-                                                    .state
-                                                    .locale
-                                                    .languageCode ==
-                                                'te'
-                                            ? const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              )
-                                            : null,
-                                      ),
-                                      const SizedBox(height: 70),
                                     ],
-                                  );
-                                },
-                              );
-                            },
+                                  ),
+                                ],
+                              ),
+                              const Divider(height: 24),
+                              _InfoLine(state.empId),
+                              _InfoLine(state.department),
+                              _InfoLine("Joining to: ${state.joiningDate}"),
+                            ],
                           ),
-                          _SettingTile(
-                            icon: Icons.logout,
-                            title: AppLocalizations.of(context)!.logout,
-                            titleColor: Colors.red,
-                            iconColor: Colors.red,
-                            onTap: () => context.read<ProfileCubit>().logout(),
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        // ───── REPORTING MANAGER ─────
+                        _WhiteCard(
+                          title: AppLocalizations.of(context)!.reportingManager,
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(
+                                  "https://i.pravatar.cc/100",
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    state.managerName,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    state.managerRole,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: AppColors.textMedium,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  }
+                        ),
 
-                  if (state is ProfileError) {
-                    return Center(child: Text(state.message));
-                  }
+                        const SizedBox(height: 12),
 
-                  return const SizedBox();
-                },
-              ),
+                        // ───── SETTINGS ─────
+                        _SettingTile(
+                          icon: Icons.lock_outline,
+                          title: AppLocalizations.of(context)!.changePassword,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChangePasswordPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        BlocBuilder<NotificationCubit, NotificationState>(
+                          builder: (context, state) {
+                            return _SettingTile(
+                              icon: Icons.notifications_none,
+                              title: AppLocalizations.of(
+                                context,
+                              )!.notifications,
+                              trailing: _Badge(
+                                count: state.notifications.length,
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const NotificationPage(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+
+                        _SettingTile(
+                          icon: Icons.language,
+                          title: AppLocalizations.of(context)!.language,
+                          // subtitle:
+                          //     context
+                          //             .read<LanguageCubit>()
+                          //             .state
+                          //             .locale
+                          //             .languageCode ==
+                          //         'en'
+                          //     ? AppLocalizations.of(context)!.english
+                          //     : AppLocalizations.of(context)!.hindi,
+                          subtitle: () {
+                            final langCode = context
+                                .read<LanguageCubit>()
+                                .state
+                                .locale
+                                .languageCode;
+
+                            switch (langCode) {
+                              case 'en':
+                                return AppLocalizations.of(context)!.english;
+                              case 'hi':
+                                return AppLocalizations.of(context)!.hindi;
+                              case 'te':
+                                return AppLocalizations.of(context)!.telugu;
+                              default:
+                                return AppLocalizations.of(context)!.english;
+                            }
+                          }(),
+
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                ),
+                              ),
+                              builder: (context) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 12),
+                                    Container(
+                                      width: 40,
+                                      height: 4,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[400],
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    ListTile(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.english,
+                                      ),
+                                      onTap: () {
+                                        context
+                                            .read<LanguageCubit>()
+                                            .changeLanguage(const Locale('en'));
+                                        Navigator.pop(context);
+                                      },
+                                      trailing:
+                                          context
+                                                  .read<LanguageCubit>()
+                                                  .state
+                                                  .locale
+                                                  .languageCode ==
+                                              'en'
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                          : null,
+                                    ),
+                                    ListTile(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.hindi,
+                                      ),
+                                      onTap: () {
+                                        context
+                                            .read<LanguageCubit>()
+                                            .changeLanguage(const Locale('hi'));
+                                        Navigator.pop(context);
+                                      },
+                                      trailing:
+                                          context
+                                                  .read<LanguageCubit>()
+                                                  .state
+                                                  .locale
+                                                  .languageCode ==
+                                              'hi'
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                          : null,
+                                    ),
+                                    ListTile(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.telugu,
+                                      ),
+                                      onTap: () {
+                                        context
+                                            .read<LanguageCubit>()
+                                            .changeLanguage(const Locale('te'));
+                                        Navigator.pop(context);
+                                      },
+                                      trailing:
+                                          context
+                                                  .read<LanguageCubit>()
+                                                  .state
+                                                  .locale
+                                                  .languageCode ==
+                                              'te'
+                                          ? const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                          : null,
+                                    ),
+                                    const SizedBox(height: 70),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        _SettingTile(
+                          icon: Icons.logout,
+                          title: AppLocalizations.of(context)!.logout,
+                          titleColor: Colors.red,
+                          iconColor: Colors.red,
+                          onTap: () async {
+                            await context.read<ProfileCubit>().logout();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/login',
+                              (route) => false,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (state is ProfileError) {
+                  return Center(child: Text(state.message));
+                }
+
+                return const SizedBox();
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -33,6 +33,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePassword => 'Change Password';
 
   @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get updatePassword => 'Update Password';
+
+  @override
   String get joiningDate => 'Joining Date';
 
   @override
@@ -79,4 +91,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get attendance => 'Attendance';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get employeeId => 'Employee ID';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get dateofbirth => 'Date of Birth';
+
+  @override
+  String get savechanges => 'Save Changes';
+
+  @override
+  String get editprofile => 'Edit Profile';
 }

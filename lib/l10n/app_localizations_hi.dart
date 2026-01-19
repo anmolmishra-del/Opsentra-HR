@@ -24,13 +24,25 @@ class AppLocalizationsHi extends AppLocalizations {
   String get telugu => 'तेलुगु';
 
   @override
-  String get logout => 'लॉगआउट';
+  String get logout => 'लॉग आउट';
 
   @override
   String get notifications => 'सूचनाएँ';
 
   @override
   String get changePassword => 'पासवर्ड बदलें';
+
+  @override
+  String get currentPassword => 'वर्तमान पासवर्ड';
+
+  @override
+  String get newPassword => 'नया पासवर्ड';
+
+  @override
+  String get confirmPassword => 'पासवर्ड की पुष्टि करें';
+
+  @override
+  String get updatePassword => 'पासवर्ड अपडेट करें';
 
   @override
   String get joiningDate => 'जॉइनिंग तिथि';
@@ -51,10 +63,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get announcement => 'घोषणा';
 
   @override
-  String get todoTasks => 'करने के कार्य';
+  String get todoTasks => 'कार्य सूची';
 
   @override
-  String get approval => 'स्वीकृति';
+  String get approval => 'अनुमोदन';
 
   @override
   String get attendanceHistory => 'उपस्थिति इतिहास';
@@ -63,7 +75,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get holidays => 'छुट्टियाँ';
 
   @override
-  String get netPay => 'शुद्ध वेतन';
+  String get netPay => 'नेट वेतन';
 
   @override
   String get earnings => 'आय';
@@ -72,11 +84,29 @@ class AppLocalizationsHi extends AppLocalizations {
   String get deductions => 'कटौतियाँ';
 
   @override
-  String get reportingManager => 'रिपोर्टिंग प्रबंधक';
+  String get reportingManager => 'रिपोर्टिंग मैनेजर';
 
   @override
   String get payslip => 'वेतन पर्ची';
 
   @override
   String get attendance => 'उपस्थिति';
+
+  @override
+  String get name => 'नाम';
+
+  @override
+  String get employeeId => 'कर्मचारी आईडी';
+
+  @override
+  String get address => 'पता';
+
+  @override
+  String get dateofbirth => 'जन्म तिथि';
+
+  @override
+  String get savechanges => 'परिवर्तन सहेजें';
+
+  @override
+  String get editprofile => 'प्रोफ़ाइल संपादित करें';
 }

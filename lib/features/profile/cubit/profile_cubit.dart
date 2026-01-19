@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opsentra_hr/features/profile/state/profile_state.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileLoading());
@@ -21,7 +21,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void logout() {
+  Future<void> logout() async {
     // clear token / session
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }
