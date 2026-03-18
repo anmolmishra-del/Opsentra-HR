@@ -8,8 +8,7 @@ class ApiClient {
     return _request(() async => http.get(Uri.parse(url), headers: await _headers()));
   }
 
-  Future<Map<String, dynamic>> post(
-    String url, {
+  Future<Map<String, dynamic>> post(String url, {
     Map<String, dynamic>? body,
   }) async {
     return _request(() async => http.post(

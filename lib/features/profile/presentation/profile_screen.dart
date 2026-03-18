@@ -16,6 +16,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileCubit>().loadProfile();
+    });
     return Scaffold(
       backgroundColor: AppColors.offWhite,
       body: Column(

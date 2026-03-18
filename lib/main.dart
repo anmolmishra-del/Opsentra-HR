@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:opsentra_hr/Core/constants/app_assets.dart';
 import 'package:opsentra_hr/Core/constants/app_colors.dart';
 import 'package:opsentra_hr/Core/local/hive_service.dart';
+import 'package:opsentra_hr/Core/models/profile_hive_model.dart';
 import 'package:opsentra_hr/Core/network/connectivity_service.dart';
 
 import 'package:opsentra_hr/features/language/cubit/language_cubit.dart';
@@ -14,7 +15,6 @@ import 'package:opsentra_hr/features/language/state/language_state.dart';
 import 'package:opsentra_hr/features/notifications/cubit/notification_cubit-page.dart';
 import 'package:opsentra_hr/features/profile/cubit/profile_cubit.dart';
 import 'package:opsentra_hr/features/profile/profile.service.dart';
-import 'package:opsentra_hr/features/profile/profile_hive_model.dart';
 import 'package:opsentra_hr/l10n/app_localizations.dart';
 
 import 'package:opsentra_hr/routes/app_routes.dart';
@@ -30,10 +30,11 @@ Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox('offlineData');
-  Hive.registerAdapter(ProfileHiveModelAdapter());
+Hive.registerAdapter(ProfileHiveModelAdapter());
+await Hive.openBox<ProfileHiveModel>('profileBox');
 
-  await Hive.openBox<ProfileHiveModel>('profileBox');
+
+  // await Hive.openBox('offlineData');
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
   runApp(
@@ -113,6 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacementNamed(context, Routes.main);
     }
   }
+                 
 
   @override
   Widget build(BuildContext context) {
